@@ -33,6 +33,16 @@ def search_password(passwords):
     if  not matching:
         print("No passwords found.")
 
+def view_all_passwords(passwords):
+    passwords_list = list(enumerate(passwords, start=1))
+    if not passwords_list:
+        print("No passwords saved.")
+    else:
+        for password in passwords_list:
+            print(f"{password[0]} _ {password[1]['website']}\n Username: {password[1]['username']}\n password: *******")
+
+
 passwords = load_passwords()
-add_password(passwords)
-search_password(passwords)
+# add_password(passwords)
+# search_password(passwords)
+view_all_passwords(passwords)
