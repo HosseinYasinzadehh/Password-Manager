@@ -1,4 +1,8 @@
 import json
+import random
+import string
+
+characters = string.ascii_letters + string.digits + string.punctuation
 
 def load_passwords():
     with open("passwords.json") as file:
@@ -9,15 +13,36 @@ def save_passwords(passwords):
     with open("passwords.json", "w") as file:
         json.dump(passwords, file)
 
+def generate_password():
+    lower = random.choice(string.ascii_lowercase)
+    upper = random.choice(string.ascii_uppercase)
+    number = random.choice(string.digits)
+    special = random.choice(string.punctuation)
+
+    password = [lower, upper, number, special]
+
+    for _ in range(4):
+        password.append(random.choice(characters))
+
+    random.shuffle(password)
+    return "".join(password)
+
 def add_password(passwords):
     web = input("please enter website url: ")
     user_name = input("please enter user name: ")
-    password = input("please enter password: ")
+
+    question = input("Do you want to generate a password? (y/n): ")
+
+    if question.lower() == "y":
+        password = generate_password()
+        print(f"Generated password: {password}")
+    else:
+        password = input("please enter password: ")
 
     info = {
-    "website": web,
-    "username": user_name,
-    "password": password
+        "website": web,
+        "username": user_name,
+        "password": password
     }
 
     passwords.append(info)
@@ -69,5 +94,6 @@ def delete_password(passwords):
 passwords = load_passwords()
 # add_password(passwords)
 # search_password(passwords)
-view_all_passwords(passwords)
-delete_password(passwords)
+# view_all_passwords(passwords)
+# delete_password(passwords)
+print(generate_password())
