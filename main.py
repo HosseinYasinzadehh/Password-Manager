@@ -2,6 +2,14 @@ import json
 import random
 import string
 
+MENU = """
+1. Add password
+2. Search password
+3. View all passwords
+4. Delete password
+5. Generate password
+6. Exit
+"""
 characters = string.ascii_letters + string.digits + string.punctuation
 
 def load_passwords():
@@ -92,8 +100,26 @@ def delete_password(passwords):
     save_passwords(passwords)
 
 passwords = load_passwords()
-# add_password(passwords)
-# search_password(passwords)
-# view_all_passwords(passwords)
-# delete_password(passwords)
-print(generate_password())
+print("===== Password Manager =====")
+print(MENU)
+
+while True:
+    try:
+        user_choice = int(input("Choose an option: "))
+    except ValueError:
+        print("enter valid number!!!")
+        continue
+    if user_choice == 1: 
+        add_password(passwords)
+    elif user_choice == 2:
+        search_password(passwords)
+    elif user_choice == 3:
+        view_all_passwords(passwords)
+    elif user_choice == 4:
+        delete_password(passwords)
+    elif user_choice == 5:
+        print(generate_password())
+    elif user_choice == 6:
+        break
+    else:
+        print("please enter valid choice")
