@@ -24,14 +24,17 @@ def add_password(passwords):
     save_passwords(passwords)
 
 def search_password(passwords):
-    matching = False
     user_search = input("Please enter site for search: ")
+    matching_passwords = []
+
     for password in passwords:
         if user_search in password["website"]:
-            matching = True
-            print(password)
-    if  not matching:
+            matching_passwords.append(password)
+
+    if not matching_passwords:
         print("No passwords found.")
+
+    return matching_passwords
 
 def view_all_passwords(passwords):
     passwords_list = list(enumerate(passwords, start=1))
@@ -41,8 +44,30 @@ def view_all_passwords(passwords):
         for password in passwords_list:
             print(f"{password[0]} _ {password[1]['website']}\n Username: {password[1]['username']}\n password: *******")
 
+def delete_password(passwords):
+    search_result = search_password(passwords)
+    view_all_passwords(search_result)
+
+    if not search_result:
+        print("nothing for show")
+        return
+    try:
+        user_choice = int(input("please enter number for delete: "))
+    except ValueError:
+        print("please just enter number in you show")
+        return
+
+    if user_choice > len(search_result) or user_choice <= 0:
+        print("please enter valid number!!!")
+        return
+    
+    selected = search_result[user_choice - 1]
+    passwords.remove(selected)
+
+    save_passwords(passwords)
 
 passwords = load_passwords()
 # add_password(passwords)
 # search_password(passwords)
 view_all_passwords(passwords)
+delete_password(passwords)
