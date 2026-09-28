@@ -23,5 +23,16 @@ def add_password(passwords):
     passwords.append(info)
     save_passwords(passwords)
 
+def search_password(passwords):
+    matching = False
+    user_search = input("Please enter site for search: ")
+    for password in passwords:
+        if user_search in password["website"]:
+            matching = True
+            print(password)
+    if  not matching:
+        print("No passwords found.")
+
 passwords = load_passwords()
 add_password(passwords)
+search_password(passwords)
